@@ -60,6 +60,7 @@ show("Cost (train/infer: mean per seed; infer = val + test; tuning: once per tas
 
 # ---------------------------------------------------------------- 2. per task: test set, warm/cold, bootstrap
 composition, staleness, subsets_scores, boots = [], [], [], []
+cold_pos_drivers = {}  # binary tasks: drivers with a positive among cold rows
 for task_name in tasks:
     task, db, tables = load(task_name)
     metric = task.metrics[0]
@@ -77,6 +78,8 @@ for task_name in tasks:
     every = np.arange(len(y))
     subsets = {"all": every, "warm": every[~cold], "cold": every[cold]}
     pos = y == 1
+    if higher:
+        cold_pos_drivers[task_name] = len(np.unique(ent[pos & cold]))
     composition.append({
         "task": task_name, "rows": len(y), "drivers": len(np.unique(ent)),
         "cold drivers": len(np.unique(ent[cold])), "cold rows": f"{cold.mean():.0%}",
@@ -144,7 +147,12 @@ for ax, task_name in zip(np.atleast_1d(axes), tasks):
     metric_name = runs[runs.task == task_name].metric.iloc[0]
     ax.set_xticks(x, ["warm", "cold"])
     ax.set_ylabel(f"test {arrow.get(metric_name, metric_name)}")
-    ax.set_ylim(0.4 if metric_name == "roc_auc" else 0, None)
+    if metric_name == "roc_auc":
+        ax.set_ylim(0, 1)
+        ax.axhline(0.5, ls="--", lw=1, color="grey")
+        if cold_pos_drivers.get(task_name, 99) < 5:
+            ax.text(1, 0.97, f"not interpretable:\nonly {cold_pos_drivers[task_name]} positive drivers",
+                    ha="center", va="top", fontsize=8)
     ax.set_title(task_name)
 np.atleast_1d(axes)[0].legend()
 fig.tight_layout()
