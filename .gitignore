@@ -7,6 +7,3 @@ data/
 results/raw/
 *.pt
 *.tar.gz
-# temporary, never committed
-reference/
-scripts/compare_with_v0.py
