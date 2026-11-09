@@ -1,0 +1,9 @@
+# TabPFN with package defaults (TabPFN-3.5 weights): no tuning by design
+model: tabpfn
+method: tabpfn_fe
+tasks: [driver-dnf, driver-top3, driver-position]
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+features:
+  windows: [5, 10]
+  staleness: false
+tabpfn: {}

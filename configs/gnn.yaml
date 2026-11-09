@@ -1,0 +1,18 @@
+# Same hyperparameters as the RelBench reference example (relbench@07ec0ce)
+model: gnn
+method: gnn_ref
+tasks: [driver-dnf, driver-top3, driver-position]
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+gnn:
+  gnn: sage
+  num_layers: 2
+  channels: 128
+  aggr: sum
+  num_neighbors: 128
+  temporal_strategy: uniform
+  lr: 0.005
+  epochs: 10
+  batch_size: 512
+  max_steps_per_epoch: 2000
+  gat_heads: 4
+  gat_dropout: 0.0

@@ -1,0 +1,43 @@
+[project]
+name = "rel-f1-bench"
+version = "0.1.0"
+description = "Feature engineering vs relational deep learning vs foundation models on RelBench rel-f1"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "torch==2.9.*",
+    "torch-geometric==2.8.*",
+    "pyg-lib",
+    "pytorch-frame==0.3.0",
+    "relbench[example]==3.1.*",
+    "sentence-transformers",
+    "lightgbm",
+    "duckdb",
+    "optuna",
+    "pandas",
+    "pyarrow",
+    "scikit-learn",
+    "pyyaml",
+    "matplotlib",
+    "tabpfn>=9.2.0",
+]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv]
+find-links = ["https://data.pyg.org/whl/torch-2.9.0+cu128.html"]
+
+[build-system]
+requires = ["uv_build>=0.13.4,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]

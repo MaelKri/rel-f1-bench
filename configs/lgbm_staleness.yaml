@@ -1,0 +1,13 @@
+# Ablation: same as lgbm.yaml plus days_since_last_race
+model: lgbm
+method: lgbm_fe_staleness
+tasks: [driver-dnf, driver-top3, driver-position]
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+n_trials: 50
+early_stopping: 100
+features:
+  windows: [5, 10]
+  staleness: true
+lgbm:
+  n_estimators: 3000
+  subsample_freq: 1

@@ -1,0 +1,13 @@
+# LightGBM on hand-crafted features, without the staleness feature (main config)
+model: lgbm
+method: lgbm_fe
+tasks: [driver-dnf, driver-top3, driver-position]
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+n_trials: 50
+early_stopping: 100
+features:
+  windows: [5, 10]
+  staleness: false
+lgbm:
+  n_estimators: 3000
+  subsample_freq: 1

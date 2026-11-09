@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.env
+data/
+results/raw/
+*.pt
+*.tar.gz
+# temporary, never committed
+reference/
+scripts/compare_with_v0.py
